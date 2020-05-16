@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from main.models import Paciente
 
 def index(request):
     return render(request, 'pages/index.html')
 
 def medico(request):
-    return render(request, 'pages/index.html')
+    return render(request, 'pages/busca_paciente.html')
 
 def criar_paciente(request):
     return render(request, 'pages/index.html')
@@ -15,3 +16,5 @@ def receita(request):
 
 def farmacia(request):
     return render(request, 'pages/index.html')
+
+
