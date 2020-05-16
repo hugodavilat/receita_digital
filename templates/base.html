@@ -8,9 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <title>Receita Digital</title>
+    <title>Receita Digital{% block title %}{% endblock title %}</title>
 </head>
 <body>
+    {% include 'partials/_navbar.html' %}
+
     {% block content %}
     {% endblock %}
 
