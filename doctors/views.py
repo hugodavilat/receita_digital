@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from main.models import Paciente
+from patients.models import Paciente
 
 def search_patient(request):
     if request.method == "POST":

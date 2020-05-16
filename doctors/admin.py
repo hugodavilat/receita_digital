@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Medico
+
+class MedicoAdmin(admin.ModelAdmin):
+    list_display = ('crm', 'nome')
+
+admin.site.register(Medico, MedicoAdmin)
+
