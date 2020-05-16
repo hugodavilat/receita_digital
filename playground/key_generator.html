@@ -1,0 +1,25 @@
+<html>
+<head>
+    <script src="nacl.min.js"></script>
+</head>
+<body>
+    <h1>Key Generator</h1>
+    <script>
+        function download(filename, data) {
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            blob = new Blob([data]);
+            url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        var a = nacl.box.keyPair();
+        console.log(a);
+        download('my.id',a.secretKey);
+    </script>
+</body>
+</html>
