@@ -1,6 +1,51 @@
 {% extends 'base.html' %}
 
+{% block title %} | Adicionar paciente{% endblock title %}
+
 {% block content %}
 {% include 'partials/_alerts.html' %}
-<h1>Criar paciente</h1>
+<section id="criar-paciente" class="bg-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4>
+                <i class="fas fa-sign-in-alt"></i> Adicionar paciente</h4>
+            </div>
+            <div class="card-body">
+              <form action="{% url 'adicionar-paciente' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Cartão SUS</label>
+                    <input type="text" name="id-paciente" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Nome</label>
+                    <input type="text" name="nome" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Nascimento</label>
+                    <input type="date" name="data_nascimento" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Telefone</label>
+                    <input type="tel" name="telefone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">CPF</label>
+                    <input type="text" name="cpf" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">E-mail</label>
+                    <input type="email" name="email" class="form-control" placeholder="example@gmail.com" required>
+                </div>
+                <input type="submit" value="Adicionar paciente" class="btn btn-secondary btn-block">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
 {% endblock %}

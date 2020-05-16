@@ -11,6 +11,6 @@ def search_patient(request):
             return redirect('criar-receita')
         except Paciente.DoesNotExist as e:
             messages.error(request, 'Paciente não encontrado')
-            return redirect('criar-paciente')
+            return redirect('adicionar-paciente')
 
     return render(request, 'doctors/search_patient.html')
