@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Receita Digital</h1>
+<section id="login" class="bg-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4>
+                <i class="fas fa-sign-in-alt"></i> Procurar paciente</h4>
+            </div>
+            <div class="card-body">
+              <!-- Alerts -->
+              <!-- % include 'partials/_alerts.html' %} -->
+              <form action="{% url 'procurar-paciente' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <input type="text" name="id-paciente" class="form-control" placeholder="Cartão SUS" required>
+                </div>
 
-<form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="idPaciente">Id do paciente</label>
-        <input type="text" class="form-control" id="idPaciente" aria-describedby="idHelp" placeholder="ID do Paciente (ex. 1234)">
-        <small id="idHelp" class="form-text text-muted">CPF/Cartão SUS</small>
+                <input type="submit" value="Procurar paciente" class="btn btn-secondary btn-block">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button type="submit" class="btn btn-success">Submit</button>
-</form>
-{% endblock %}
+</section>
+{% endblock content %}

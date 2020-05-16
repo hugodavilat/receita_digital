@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'patients.apps.PatientsConfig',
+    'prescriptions.apps.PrescriptionsConfig',
     'doctors.apps.DoctorsConfig',
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
@@ -128,3 +130,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'receita_digital/static')
 ]
+
+# Messages
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
