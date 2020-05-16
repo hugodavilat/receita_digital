@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from main.models import Paciente
 
 def index(request):
     return render(request, 'pages/index.html')

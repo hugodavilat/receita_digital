@@ -1,12 +1,17 @@
 from django.contrib import admin
-from main import models
+from main.models import Farmacia, Medicamento, Posologia
 
-class PacienteAdmin(admin.ModelAdmin):
-    list_display = ('id_paciente', 'nome')
+class FarmaciaAdmin(admin.ModelAdmin):
+    list_display = ('nome',)
 
-admin.site.register(models.Farmacia)
-admin.site.register(models.Medicamento)
-admin.site.register(models.Medico)
-admin.site.register(models.Paciente, PacienteAdmin)
-admin.site.register(models.Posologia)
-admin.site.register(models.Receita)
+
+class MedicamentoAdmin(admin.ModelAdmin):
+    list_display = ('nome',)
+
+
+class PosologiaAdmin(admin.ModelAdmin):
+    list_display = ('medicamento', 'posologia')
+
+admin.site.register(Farmacia, FarmaciaAdmin)
+admin.site.register(Medicamento, MedicamentoAdmin)
+admin.site.register(Posologia, PosologiaAdmin)
