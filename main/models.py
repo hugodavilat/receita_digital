@@ -26,6 +26,7 @@ class Medico(models.Model):
     telefone = models.CharField(max_length=20)
     email = models.CharField(max_length=100)
     especialidade = models.CharField(max_length=100)
+    chave_publica = models.CharField(max_length=1000, blank=False, null=False)
 
     class Meta:
         db_table = 'medico'
@@ -36,19 +37,23 @@ class Paciente(models.Model):
     data_nascimento = models.DateField(verbose_name='Data de Nascimento')
     telefone = models.CharField(max_length=20)
     cpf = models.CharField(max_length=11)
-    email = models.CharField(max_length=100)
+    email = models.EmailField()
 
     class Meta:
         db_table = 'paciente'
 
-class Receita(models.Model):
-    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
+class Posologia(models.Model):
     medicamento = models.ForeignKey(Medicamento, on_delete=models.PROTECT)
     posologia = models.CharField(max_length=30)
+
+class Receita(models.Model):
+    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT)
+    posologias = models.ManyToManyField(Posologia)
     medico = models.ForeignKey(Medico, on_delete=models.PROTECT)
     data = models.DateTimeField(auto_now_add=True)
     used = models.BooleanField(default=False)
-    seed = models.CharField(max_length=256)
+    documento = models.CharField(max_length=5000)
+    signature = models.CharField(max_length=256)
 
     class Meta:
         db_table = 'receita'
