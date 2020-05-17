@@ -22,6 +22,8 @@
             <div class="card-body">
               <form action="{% url 'criar-receita' %}" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="challenge" id="challenge" value="{{ challenge }}">
+                <input type="hidden" name="challenge-answer" id="challenge-answer">
                 <div class="form-group">
                     <label for="id_paciente">Cartão SUS</label>
                     <input type="text" name="id_paciente" class="form-control"
@@ -55,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label for="chave">Chave</label>
-                    <input type="file" name="chave" class="form-control-file" required>
+                    <input type="file" name="chave" id="chave" class="form-control-file" required>
                 </div>
                 <input type="submit" value="Criar receita" class="btn btn-outline-secondary btn-block">
               </form>
@@ -69,5 +71,6 @@
 
 {% block customjs %}
     <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/nacl.min.js' %}"></script>
     <script src="{% static 'js/create_prescription.js' %}"></script>
 {% endblock customjs %}

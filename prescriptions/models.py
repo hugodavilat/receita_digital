@@ -11,7 +11,6 @@ class Receita(models.Model):
     medico = models.ForeignKey(Medico, on_delete=models.PROTECT)
     data = models.DateTimeField(auto_now_add=True)
     used = models.BooleanField(default=False)
-    signature = models.CharField(max_length=256, blank=True)
 
     def __str__(self):
         return f"{self.medico}, {self.paciente}, {self.data}"

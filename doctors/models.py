@@ -22,6 +22,7 @@ class Medico(models.Model):
             user = User()
             user.username = kwargs['username']
             user.password = kwargs['password']
+            user.set_password(user.password)
             user.user_type=1
             user.save()
             medico = Medico(
