@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %} | Adicionar paciente{% endblock title %}
+{% block title %} | Cadastrar médico{% endblock title %}
 
 {% block content %}
 {% include 'partials/_alerts.html' %}
-
 <section id="criar-paciente" class="bg-light py-5">
     <div class="container">
       <div class="row">
@@ -12,14 +11,15 @@
           <div class="card">
             <div class="card-header bg-primary text-white">
               <h4>
-                <i class="fas fa-sign-in-alt"></i> Adicionar paciente</h4>
+                <i class="fas fa-sign-in-alt"></i> Cadastrar médico</h4>
             </div>
             <div class="card-body">
-              <form action="{% url 'adicionar-paciente' %}" method="POST">
+              <form id="criar-medico-form" action="{% url 'adicionar-medico' %}" method="POST">
                 {% csrf_token %}
+                <input type="hidden" name="public-key" id="public-key">
                 <div class="form-group">
-                    <label for="id-paciente">Cartão SUS</label>
-                    <input type="text" name="id-paciente" class="form-control" required>
+                    <label for="id-paciente">CRM</label>
+                    <input type="text" name="id-medico" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="nome">Nome</label>
@@ -34,14 +34,14 @@
                     <input type="tel" name="telefone" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="cpf">CPF</label>
-                    <input type="text" name="cpf" class="form-control" required>
-                </div>
-                <div class="form-group">
                     <label for="email">E-mail</label>
                     <input type="email" name="email" class="form-control" placeholder="example@gmail.com" required>
                 </div>
-                <input type="submit" value="Adicionar paciente" class="btn btn-secondary btn-block">
+                <div class="form-group">
+                  <label for="especialidade">Especialidade</label>
+                  <input type="text" name="especialidade" class="form-control" required>
+              </div>
+                <input type="submit" value="Salvar" class="btn btn-secondary btn-block">
               </form>
             </div>
           </div>
@@ -49,4 +49,28 @@
       </div>
     </div>
 </section>
+{% endblock %}
+{% block js %}
+<script src="nacl.min.js"></script>
+<script>
+  function download(filename, data) {
+      let a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      blob = new Blob([data]);
+      url = window.URL.createObjectURL(blob);
+      a.href = url;
+      a.download = filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+  }
+  function formSubmission() {
+    let a = nacl.box.keyPair();
+    console.log(a);
+    download('my.id', a.secretKey);
+  }
+  let formElement = document.getElementById("criar-medico-form");
+  formElement.addEventListener("submit", formSubmission);
+
+</script>
 {% endblock %}
