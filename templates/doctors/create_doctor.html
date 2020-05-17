@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} | Cadastrar médico{% endblock title %}
 
 {% block content %}
 {% include 'partials/_alerts.html' %}
-<section id="criar-paciente" class="bg-light py-5">
+<section id="criar-doctor" class="bg-light py-5">
     <div class="container">
       <div class="row">
         <div class="col-md-6 mx-auto">
@@ -14,20 +15,16 @@
                 <i class="fas fa-sign-in-alt"></i> Cadastrar médico</h4>
             </div>
             <div class="card-body">
-              <form id="criar-medico-form" action="{% url 'adicionar-medico' %}" method="POST">
+            <form id="criar-medico-form" action="{% url 'adicionar-medico' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="public-key" id="public-key">
                 <div class="form-group">
-                    <label for="id-paciente">CRM</label>
+                    <label for="id-medico">CRM</label>
                     <input type="text" name="id-medico" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="nome">Nome</label>
                     <input type="text" name="nome" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="data_nascimento">Nascimento</label>
-                    <input type="date" name="data_nascimento" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
@@ -39,8 +36,16 @@
                 </div>
                 <div class="form-group">
                   <label for="especialidade">Especialidade</label>
-                  <input type="text" name="especialidade" class="form-control" required>
-              </div>
+                  <input type="text" name="especialidade" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" class="form-control" required>
+                </div>
                 <input type="submit" value="Salvar" class="btn btn-outline-secondary btn-block">
               </form>
             </div>
@@ -50,27 +55,9 @@
     </div>
 </section>
 {% endblock %}
-{% block customjs %}
-<script src="nacl.min.js"></script>
-<script>
-  function download(filename, data) {
-      let a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      blob = new Blob([data]);
-      url = window.URL.createObjectURL(blob);
-      a.href = url;
-      a.download = filename;
-      a.click();
-      window.URL.revokeObjectURL(url);
-  }
-  function formSubmission() {
-    let a = nacl.box.keyPair();
-    console.log(a);
-    download('my.id', a.secretKey);
-  }
-  let formElement = document.getElementById("criar-medico-form");
-  formElement.addEventListener("submit", formSubmission);
 
-</script>
-{% endblock %}
+{% block customjs %}
+  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'js/nacl.min.js' %}"></script>
+  <script src="{% static 'js/create_doctor.js' %}"></script>
+{% endblock customjs %}

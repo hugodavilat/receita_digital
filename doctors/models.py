@@ -16,5 +16,24 @@ class Medico(models.Model):
     def __str__(self):
         return self.nome
 
+    @classmethod
+    def create(cls, *args, **kwargs):
+        with transaction.atomic():
+            user = User()
+            user.username = kwargs['username']
+            user.password = kwargs['password']
+            user.user_type=1
+            user.save()
+            medico = Medico(
+                user=user,
+                crm=kwargs['id-medico'],
+                nome=kwargs['nome'],
+                telefone=kwargs['telefone'],
+                especialidade=kwargs['especialidade'],
+                email=kwargs['email'],
+                chave_publica=kwargs['public-key']
+            )
+            return medico.save()
+
     class Meta:
         db_table = 'medico'
