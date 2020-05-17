@@ -15,10 +15,11 @@
     font-weight: 400;
     line-height: 1.5;
     color: #495057;
-    border: 1px solid #777;
+    border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: .25rem;
 }
 
-.card-body {
+.card.bg-light .card-body {
     padding: 0.9rem;
+    background-color: #f8f9fa;
 }

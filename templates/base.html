@@ -11,15 +11,18 @@
     <!-- Bootstrap -->
     {% compress css %}
         <link type="text/x-scss" href="{% static 'scss/bootstrap/bootstrap.scss' %}" rel="stylesheet" media="screen">
+        <link type="text/x-scss" href="{% static 'scss/theme.scss' %}" rel="stylesheet" media="screen">
+        {% block customcss %}{% endblock customcss %}
     {% endcompress %}
-    {% block customcss %}{% endblock customcss %}
     <title>Receita Digital{% block title %}{% endblock title %}</title>
 </head>
 <body>
     {% include 'partials/_navbar.html' %}
 
-    {% block content %}
-    {% endblock %}
+    <div class="h-100 w-100 bg-light" style="position: absolute;">
+        {% block content %}
+        {% endblock %}
+    </div>
     <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
