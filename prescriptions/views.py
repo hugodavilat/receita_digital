@@ -88,7 +88,7 @@ def get_prescription(request):
                 messages.success(request, 'Receita utilizada com sucesso.')
             else:
                 context['receita_id'] = receita_id
-                messages.error(request, 'Receita não Encontrada')
+                messages.error(request, 'Receita não encontrada.')
         elif request.POST.get("busca", False):
             if Receita.objects.filter(id=receita_id).exists():
                 receita = Receita.objects.get(pk=receita_id)
@@ -97,5 +97,5 @@ def get_prescription(request):
                 context['receita'] = receita
             else:
                 context['receita_id'] = receita_id
-                messages.error(request, 'Receita não Encontrada')
+                messages.error(request, 'Receita não encontrada')
     return render(request, 'prescriptions/farmacia.html', context)

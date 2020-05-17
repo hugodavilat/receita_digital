@@ -34,7 +34,7 @@
                 </div> <!-- Cartão de busca -->
                 {% if receita %}
                     <div class="card"> <!-- Cartão da receita -->
-                        <div class="card-header bg-primary text-white">
+                        <div class="card-header {% if receita.used %}bg-danger{% else %}bg-primary{% endif %} text-white">
                             <h4><i class="fas fa-sign-in-alt"></i> Receita</h4>
                         </div>
                         <div class="card-body">
@@ -44,8 +44,8 @@
                                 {% else %}
                                     <span class="badge badge-success float-right">Disponível</span>
                                 {% endif %}
-                                <p><strong>Data:</strong> {{receita.data|date:"j \d\e F \d\e Y"}}</p>
-                                <p><strong>Dr./Dr.ª:</strong> {{receita.medico.nome}}.</p>
+                                <p><strong>Data:</strong> {{receita.data|date:"j \d\e F \d\e Y"}}.</p>
+                                <p><strong>Médico(a):</strong> {{receita.medico.nome}}.</p>
                             </div>
                             <div class="card bg-light" id="lista-medicamentos">
                                 {% for posologia in receita.posologias.all %}
