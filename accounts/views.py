@@ -4,8 +4,8 @@ from .models import User
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('login')
+        password = request.POST.get('password')
 
         user = auth.authenticate(username=username, password=password)
 
