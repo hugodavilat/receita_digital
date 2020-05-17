@@ -1,6 +1,6 @@
-> This README is also available in [Brazilian Portuguese](README.pt-br.md)
+> Este README também está disponível em [Português do Brasil](README.pt-br.md)
 
-![Dipre](static/logo_256.png)
+![Dipre](receita_digital/static/logo_256.png)
 
 # Dipre
 
