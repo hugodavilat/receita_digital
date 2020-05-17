@@ -11,7 +11,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            if user.user_type == 'doctor':
+            if user.user_type == 1:
                 return redirect('procurar-paciente')
             else:
                 return redirect('index')
