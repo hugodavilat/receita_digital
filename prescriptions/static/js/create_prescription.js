@@ -1,5 +1,27 @@
 $( document ).ready( function() {
-
+    const fromHexString = hexString =>
+    new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+    
+    const toHexString = bytes =>
+    bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
+    
+    /* Our public key */
+    let public_system = "1cccdad29902d2e60462184abef36df5f0d260dca16ef67376a2cfcbc190f117";
+    let nonce = nacl.randomBytes(24);
+    
+    $('#chave').change(function() { 
+       
+       let fr=new FileReader();
+       fr.onload=function(){
+           let private = new Uint8Array(fr.result);
+           var enc = new TextEncoder();
+           let challenge = enc.encode(document.getElementById("challenge").value);
+           
+           let result = nacl.box(challenge, nonce, fromHexString(public_system), private);
+           $("#challenge-answer").val(toHexString(nonce) + toHexString(result));
+       }
+       fr.readAsArrayBuffer(this.files[0]); 
+    });
     // Botão de dismiss
     $('.del-medicamento').click(function() {
         $(this).closest('.card-body').fadeOut('slow', function() {
