@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'compressor',
     'patients.apps.PatientsConfig',
     'prescriptions.apps.PrescriptionsConfig',
     'doctors.apps.DoctorsConfig',
@@ -131,6 +132,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'receita_digital/static'),
     os.path.join(BASE_DIR, 'prescriptions/static')
 ]
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+LIBSASS_SOURCE_COMMENTS=False
 
 # Messages
 from django.contrib.messages import constants as messages
