@@ -1,6 +1,9 @@
 from django.db import models
 
+from accounts.models import User
+
 class Farmacia(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
     nome = models.CharField(max_length=200, null=False)
     email = models.CharField(max_length=100, blank=True)
     endereco = models.CharField(max_length=100, blank=True)

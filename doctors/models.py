@@ -1,6 +1,11 @@
 from django.db import models
+from accounts.models import User
+from django.db import transaction
+
+
 
 class Medico(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     crm = models.CharField(max_length=100, primary_key=True, unique=True)
     nome = models.CharField(max_length=200, null=False)
     telefone = models.CharField(max_length=20, blank=True)
