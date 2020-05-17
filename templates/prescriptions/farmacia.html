@@ -1,29 +1,94 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block customcss %}
+    <link type="text/x-scss" rel="stylesheet" href="{% static 'scss/get-prescription.scss' %}">
+{% endblock customcss %}
+
 {% block content %}
 {% include 'partials/_alerts.html' %}
+<section id="criar-receita" class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                {% if receita %}
+                    <button type="button" class="btn btn-outline-secondary btn-block mb-2" id="toggle-busca">Exibir/Ocultar busca</button>
+                {% endif %}
+                <div class="card {% if receita %}d-none{% endif %}"
+                id="cartao-de-busca">  <!-- Cartão de busca -->
+                    <div class="card-header bg-primary text-white">
+                        <h4><i class="fas fa-sign-in-alt"></i> Consultar receita</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% url 'buscar-receita' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="receita_id">Número da receita</label>
+                                <input type="text" name="receita_id" class="form-control" placeholder="12345"
+                                {% if receita_id %} value={{receita_id}} {% endif %}
+                                {% if receita.id %} value={{receita.id}} {% endif %} required>
+                            </div>
+                            <button type="submit" class="btn btn-outline-secondary btn-block" name="busca" value=1>Busca</button>
+                    </div>
+                </div> <!-- Cartão de busca -->
+                {% if receita %}
+                    <div class="card"> <!-- Cartão da receita -->
+                        <div class="card-header bg-primary text-white">
+                            <h4><i class="fas fa-sign-in-alt"></i> Receita</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-body sub-card-receita">
+                                {% if receita.used %}
+                                    <span class="badge badge-danger float-right">Utilizada</span>
+                                {% else %}
+                                    <span class="badge badge-success float-right">Disponível</span>
+                                {% endif %}
+                                <p><strong>Data:</strong> {{receita.data|date:"j \d\e F \d\e Y"}}</p>
+                                <p><strong>Dr./Dr.ª:</strong> {{receita.medico.nome}}.</p>
+                            </div>
+                            <div class="card bg-light" id="lista-medicamentos">
+                                {% for posologia in receita.posologias.all %}
+                                    <div class="card-body sub-card-receita">
+                                        <p class="medicamentos">{{posologia.medicamento.nome}}</p>
+                                        <p class="posologias">{{posologia.posologia}}</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            {% if receita.observacoes %}
+                                <div class="card-body sub-card-receita">
+                                    <p><strong>Observações:</strong></br>
+                                    {{receita.observacoes}}</p>
+                                </div>
+                            {% endif %}
+                            {% if not receita.used %}
+                                <button type="submit" class="btn btn-outline-success btn-block mt-2" name="vende" value=1>Vender</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div> <!-- Cartão da receita -->
+                {% endif %} <!-- Se não houver receita -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
 
-<h1>Receita Digital</h1>
+{% block customjs %}
+    <script src="{% static 'js/get_prescription.js' %}"></script>
+{% endblock customjs %}
 
-<form action="{% url 'buscar-receita' %}" method="POST">
+<!-- <form  method="POST">
     {% csrf_token %}
     <div class="form-group">
         <label for="receita_id">Id da Receita</label>
-        <input type="text" class="form-control" id="receita_id" name="receita_id" aria-describedby="idReceitaHelp" placeholder="ID da Receita (ex. 1234)">
-        <small id="idReceitaHelp" class="form-text text-muted">ID da Receita</small>
+        <input type="text" class="form-control" id="receita_id" name="receita_id" aria-describedby="idReceitaHelp" >
     </div>
-    <button type="submit" class="btn btn-outline-success" name="busca">Busca</button>
-    {% if not used %}
-    <div class="card-body">
-        <button type="submit" class="btn btn-outline-danger" name="vende">Vender</button>
-    </div>
-    {% endif %}
+
 </form>
 
 {% if medico %}
 <div class="card-body">
     <textarea>Medico: {{medico}}</textarea>
 </div>
-{% endif %}
-
-{% endblock %}
+{% endif %} -->

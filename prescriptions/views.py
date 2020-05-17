@@ -36,32 +36,26 @@ def create_prescription(request):
 
 
 def get_prescription(request):
+    context = {}
     if request.method == "POST":
-        receita_id = request.POST.get('receita_id')
-        print(receita_id)
-        if request.POST.get("vende"):
+        receita_id = request.POST.get('receita_id', None)
+        if request.POST.get("vende", False):
             if Receita.objects.filter(id=receita_id).exists():
                 receita = Receita.objects.get(pk=receita_id)
                 receita.used = True
-                receita.update()
-                context = {
-                    'medico': receita.medico.nome,
-                    'used': receita.used
-                }
-                return render(request, 'prescriptions/farmacia.html', context)
+                receita.save()
+                context['receita'] = receita
+                messages.success(request, 'Receita utilizada com sucesso.')
             else:
+                context['receita_id'] = receita_id
                 messages.error(request, 'Receita não Encontrada')
-                return render(request, 'prescriptions/farmacia.html')
-
-        if Receita.objects.filter(id=receita_id).exists():
-            receita = Receita.objects.get(pk=receita_id)
-            if receita.used == True:
-                messages.warning(request, 'Receita já utilizada')
-            context = {
-                'medico': receita.medico.nome,
-                'used': receita.used
-            }
-            return render(request, 'prescriptions/farmacia.html', context)
-        else:
-            messages.error(request, 'Receita não Encontrada')
-    return render(request, 'prescriptions/farmacia.html')
+        elif request.POST.get("busca", False):
+            if Receita.objects.filter(id=receita_id).exists():
+                receita = Receita.objects.get(pk=receita_id)
+                if receita.used == True:
+                    messages.warning(request, 'Receita já utilizada.')
+                context['receita'] = receita
+            else:
+                context['receita_id'] = receita_id
+                messages.error(request, 'Receita não Encontrada')
+    return render(request, 'prescriptions/farmacia.html', context)
