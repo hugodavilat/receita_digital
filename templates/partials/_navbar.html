@@ -9,7 +9,29 @@
         <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        {% if user.is_authenticated %}
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Olá, {{ request.user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if request.user.user_type == 1 %}
+                            <a class="dropdown-item" href="{% url 'buscar-receita' %}">Buscar Receita</a>
+                            <a class="dropdown-item" href="{% url 'procurar-paciente' %}">Criar Receita</a>
+                        {% elif request.user.user_type == 2 %}
+                            <a class="dropdown-item" href="{% url 'buscar-receita' %}">Buscar Receita</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        {% else %}
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item {% if 'login' in request.path %} active {% endif %}">
@@ -17,5 +39,6 @@
             </li>
             </ul>
         </div>
+        {% endif %}
     </div>
 </nav>

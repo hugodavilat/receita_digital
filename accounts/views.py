@@ -20,3 +20,6 @@ def login(request):
             return redirect('login')
     return render(request, 'accounts/login.html')
 
+def logout(request):
+    auth.logout(request)
+    return redirect("index")
