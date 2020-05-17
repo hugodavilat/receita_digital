@@ -12,7 +12,12 @@
         <input type="text" class="form-control" id="receita_id" name="receita_id" aria-describedby="idReceitaHelp" placeholder="ID da Receita (ex. 1234)">
         <small id="idReceitaHelp" class="form-text text-muted">ID da Receita</small>
     </div>
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit" class="btn btn-success" name="busca">Busca</button>
+    {% if not used %}
+    <div class="card-body">
+        <button type="submit" class="btn btn-danger" name="vende">Vender</button>
+    </div>
+    {% endif %}
 </form>
 
 {% if medico %}
