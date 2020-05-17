@@ -4,6 +4,7 @@ Django==3.0.6
 django-appconf==1.0.4
 django-compressor==2.4
 django-libsass==0.8
+libnacl==1.7.1
 libsass==0.20.0
 pkg-resources==0.0.0
 psycopg2-binary==2.8.5
