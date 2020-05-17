@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} | Criar receita{% endblock title %}
+
+{% block customcss %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create-prescription.css' %}">
+{% endblock customcss %}
+
+{% block content %}
+{% include 'partials/_alerts.html' %}
+<section id="criar-receita" class="bg-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h4>
+                <i class="fas fa-sign-in-alt"></i> Criar receita</h4>
+            </div>
+            <div class="card-body">
+              <form action="{% url 'criar-receita' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_paciente">Cartão SUS</label>
+                    <input type="text" name="id_paciente" class="form-control"
+                    {% if id_paciente %} value={{id_paciente}} {% endif %} required>
+                </div>
+                <div class="form-group ui-widget">
+                    <label for="medicamento">Medicamentos</label>
+                    <div class="input-group mb-3">
+                        <input type="text" name="medicamento" class="form-control" id="medicamento">
+                        <div class="input-group-append">
+                          <button type="button" class="btn btn-outline-secondary"
+                          id="add-medicamento">+</button>
+                        </div>
+                    </div>
+                    <div class="card bg-light" id="lista-medicamentos">
+                        {% if medicamentos %}
+                            {% for medicamento, posologia in medicamentos %}
+                                <div class="card-body">
+                                    <span class="del-medicamento float-right">&times;</span>
+                                    <input class="medicamento-adicionado" name="medicamentos" value="{{medicamento}}" readonly>
+                                    <input class="posologias" name="posologias" placeholder="Posologia" value="{{posologia}}" required>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="observacoes">Observações</label>
+                    <input type="textarea" name="observacoes" class="form-control" rows=4
+                    {% if observacoes %} value="{{observacoes}}" {% endif %} required>
+                </div>
+                <div class="form-group">
+                    <label for="chave">Chave</label>
+                    <input type="file" name="chave" class="form-control-file" required>
+                </div>
+                <input type="submit" value="Criar receita" class="btn btn-secondary btn-block">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block customjs %}
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/create_prescription.js' %}"></script>
+{% endblock customjs %}
