@@ -54,7 +54,7 @@ $( document ).ready( function() {
             })
         );
         div_drugs_list.append(div_new_drug);
-        $('#medicamentos').val("");
+        $('#medicamento').val("");
         $('.del-medicamento').click(function() {
             $(this).closest('.card-body').fadeOut('slow', function() {
                 $(this).remove();

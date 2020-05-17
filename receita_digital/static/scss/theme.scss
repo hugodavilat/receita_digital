@@ -1,8 +1,19 @@
-$primary: #137547;
-$secondary: #2D3A3A;
+$primary: #04cc58;
+$secondary: #20063B;
 $warning: #FA9F42;
 $danger: #721817;
-$light: rgba(224, 224, 226, 0.5);
+$light: #f3f3f3;
 
+.navbar {
+    background-color: var(--light);
+}
+
+.navbar a {
+    color: var(--secondary);
+}
+
+.navbar a:hover {
+    color: #20063bc4;
+}
 
 @import './bootstrap/bootstrap';
