@@ -4,6 +4,7 @@
 </head>
 <body>
     <h1>Key Generator</h1>
+    <p>The public key should be stored on database: <a id="key"></a></p>
     <script>
         function download(filename, data) {
             var a = document.createElement("a");
@@ -17,9 +18,23 @@
             window.URL.revokeObjectURL(url);
         }
 
-        var a = nacl.box.keyPair();
-        console.log(a);
-        console.log(new TextDecoder("utf-8").decode(a.publicKey));
+        const fromHexString = hexString =>
+          new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+
+        const toHexString = bytes =>
+          bytes.reduce((str, byte) => str + byte.toString(16).padStart(2, '0'), '');
+
+        //const buffer = new Uint8Array([ 4, 8, 12, 16 ]).buffer;
+        //console.log(buf2hex(buffer)); // = 04080c10
+
+        let a = nacl.box.keyPair();
+        var display = document.getElementById("key");
+        var text = document.createTextNode(toHexString(a.publicKey));
+        display.appendChild(text);
+
+        console.log(toHexString(a.publicKey));
+        console.log(toHexString(a.secretKey));
+        
         download('my.id',a.secretKey);
     </script>
 </body>
