@@ -28,7 +28,7 @@ class Posologia(models.Model):
     posologia = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.posologia
+        return f"{self.medicamento}, {self.posologia}"
 
     class Meta:
         db_table = 'posologia'
