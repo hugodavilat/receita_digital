@@ -130,7 +130,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'receita_digital/static'),
-    os.path.join(BASE_DIR, 'prescriptions/static')
+    os.path.join(BASE_DIR, 'prescriptions/static'),
+    os.path.join(BASE_DIR, 'pages/static')
 ]
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
