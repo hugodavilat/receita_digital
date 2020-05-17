@@ -36,12 +36,10 @@ Documentation:
 
                 var enc = new TextEncoder();
                 let challenge = enc.encode(document.getElementById("challenge").value);
-                console.log(challenge)
-                console.log(nonce)
                 
                 let result = nacl.box(challenge, nonce, fromHexString(public_system), private);
                 var display = document.getElementById("result");
-                var text = document.createTextNode(toHexString(result));
+                var text = document.createTextNode(toHexString(nonce) + toHexString(result));
                 display.appendChild(text);
                 console.log(result)
             }

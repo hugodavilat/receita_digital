@@ -15,15 +15,22 @@ doctors = {
     "doctor3" : "9462126cb2aa6a70204439a7446ed9feac5b0c4cd5415aece163a672f6650040"
 }
 
-challenge = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(32))
+challenge = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(7))
 doc = input("Which doctor are you trying to authenticate (doctor1, doctor2 or doctor3)? ")
 message = input("Please, tell us the result for the challenge '{}': ".format(challenge))
 
 message = bytes.fromhex(message)
-print(len(message))
 public_doctor = doctors[doc]
 public_doctor = PublicKey(bytes.fromhex(public_doctor))
 
-box = Box(private_system, public_doctor)
-plaintext = box.decrypt(message)
-print(plaintext.decode('utf-8'))
+try:
+    box = Box(private_system, public_doctor)
+    plaintext = box.decrypt(message)
+    result = plaintext.decode('utf-8')
+except:
+    result = None
+
+if (result == challenge):
+    print("Authenticated!")
+else:
+    print("Not authenticated!")
