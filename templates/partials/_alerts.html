@@ -7,6 +7,10 @@
                 <strong>
                     {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
                         Erro: 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                        Alerta: 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        Sucesso: 
                     {% else %}
                         {{message.tags|title}}: 
                     {% endif %}
