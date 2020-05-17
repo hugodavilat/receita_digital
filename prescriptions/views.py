@@ -33,3 +33,35 @@ def create_prescription(request):
             return render(request, 'prescriptions/create_prescription.html', context)
 
     return render(request, 'prescriptions/create_prescription.html')
+
+
+def get_prescription(request):
+    if request.method == "POST":
+        receita_id = request.POST.get('receita_id')
+        print(receita_id)
+        if request.POST.get("vende"):
+            if Receita.objects.filter(id=receita_id).exists():
+                receita = Receita.objects.get(pk=receita_id)
+                receita.used = True
+                receita.update()
+                context = {
+                    'medico': receita.medico.nome,
+                    'used': receita.used
+                }
+                return render(request, 'prescriptions/farmacia.html', context)
+            else:
+                messages.error(request, 'Receita não Encontrada')
+                return render(request, 'prescriptions/farmacia.html')
+
+        if Receita.objects.filter(id=receita_id).exists():
+            receita = Receita.objects.get(pk=receita_id)
+            if receita.used == True:
+                messages.warning(request, 'Receita já utilizada')
+            context = {
+                'medico': receita.medico.nome,
+                'used': receita.used
+            }
+            return render(request, 'prescriptions/farmacia.html', context)
+        else:
+            messages.error(request, 'Receita não Encontrada')
+    return render(request, 'prescriptions/farmacia.html')

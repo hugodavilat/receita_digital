@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'partials/_alerts.html' %}
+
+<h1>Receita Digital</h1>
+
+<form action="{% url 'buscar-receita' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="receita_id">Id da Receita</label>
+        <input type="text" class="form-control" id="receita_id" name="receita_id" aria-describedby="idReceitaHelp" placeholder="ID da Receita (ex. 1234)">
+        <small id="idReceitaHelp" class="form-text text-muted">ID da Receita</small>
+    </div>
+    <button type="submit" class="btn btn-success" name="busca">Busca</button>
+    {% if not used %}
+    <div class="card-body">
+        <button type="submit" class="btn btn-danger" name="vende">Vender</button>
+    </div>
+    {% endif %}
+</form>
+
+{% if medico %}
+<div class="card-body">
+    <textarea>Medico: {{medico}}</textarea>
+</div>
+{% endif %}
+
+{% endblock %}
