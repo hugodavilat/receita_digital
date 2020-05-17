@@ -2,6 +2,10 @@
   max-width: 960px;
 }
 
+.background {
+  background-image: url("/static/background_white.png");
+}
+
 /*
  * Custom translucent site header
  */
